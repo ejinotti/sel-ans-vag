@@ -1,0 +1,15 @@
+---
+- hosts: hub
+  sudo: yes
+  tasks:
+
+    - name: Install JRE
+      apt:
+        name: openjdk-7-jre
+        state: present
+        update_cache: yes
+
+    - name: Start Selenium
+      selenium:
+        role: hub
+        state: running
