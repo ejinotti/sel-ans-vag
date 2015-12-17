@@ -1,1 +1,10 @@
 ---
+- hosts: chrome
+  sudo: yes
+  tasks:
+
+    - name: Install JRE
+      apt:
+        name: openjdk-7-jre
+        state: present
+        update_cache: yes
