@@ -5,18 +5,16 @@
 
     - include: base.yml
 
-    - name: copy config file
+    - name: copy selenium config file
       copy:
         src: ./templates/hub_config.json
         dest: /opt/selenium/config.json
         owner: seluser
 
-    - name: Start Selenium
-      become: seluser
-      selenium:
-        role: hub
-        state: running
-        path: /opt/selenium
-        logfile: /opt/selenium/selenium.log
-        args:
-          hubConfig: /opt/selenium/config.json
+    - name: copy selenium service config file
+      copy:
+        src: ./templates/selenium.conf.j2
+        dest: /etc/init/selenium-hub.conf
+
+    - name: start selenium
+      service: name=selenium-hub state=restarted
