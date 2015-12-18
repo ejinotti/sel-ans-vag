@@ -24,6 +24,8 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define :chrome do |chrome|
+    chrome.vm.network "private_network", ip: "192.168.12.15"
+
     chrome.vm.provision :ansible do |ansible|
       ansible.verbose = "v"
       ansible.playbook = "playbooks/selenium-node-chrome.yml"
