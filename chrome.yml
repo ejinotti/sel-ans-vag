@@ -1,7 +1,0 @@
----
-- hosts: chrome
-  sudo: yes
-  tasks:
-
-    - name: dummy
-      command: echo "helloes"
