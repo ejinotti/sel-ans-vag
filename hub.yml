@@ -3,13 +3,20 @@
   sudo: yes
   tasks:
 
-    - name: Install JRE
-      apt:
-        name: openjdk-7-jre
-        state: present
-        update_cache: yes
+    - include: base.yml
+
+    - name: copy config file
+      copy:
+        src: ./templates/hub_config.json
+        dest: /opt/selenium/config.json
+        owner: seluser
 
     - name: Start Selenium
+      become: seluser
       selenium:
         role: hub
         state: running
+        path: /opt/selenium
+        logfile: /opt/selenium/selenium.log
+        args:
+          hubConfig: /opt/selenium/config.json
