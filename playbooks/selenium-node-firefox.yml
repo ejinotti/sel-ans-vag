@@ -3,7 +3,7 @@
   sudo: yes
   vars:
     sel_role: node
-    selenium_hub_host: 172.28.128.4
+    selenium_hub_host: 192.168.12.13
     selenium_hub_port: 4444
     browser: firefox
     browser_instances: 5
