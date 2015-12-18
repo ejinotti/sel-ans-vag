@@ -17,7 +17,7 @@ Vagrant.configure(2) do |config|
   config.vm.define :firefox do |firefox|
     firefox.vm.provision :ansible do |ansible|
       ansible.verbose = "v"
-      ansible.playbook = "firefox.yml"
+      ansible.playbook = "playbooks/selenium-node-firefox.yml"
     end
   end
 

@@ -15,8 +15,12 @@ sel_url: "{{ sel_dom + sel_dompath + sel_jar }}"
 sel_user: selenium
 sel_home: /opt/selenium
 
-# java command line opts for selenium init service conf
+# java args for selenium init service conf
 role_opt: "-role {{ sel_role }}"
 config_opt: "-{{ sel_role }}Config {{ sel_home }}/config.json"
 logging: ">> {{ sel_home }}/selenium.log 2>&1"
 sel_opts: "{{ role_opt }} {{ config_opt }} {{ logging }}"
+java_args: "-jar {{ sel_home }}/{{ sel_jar }} {{ sel_opts }}"
+
+# xvfb only if node
+xvfb_cmd: "{{ 'xvfb-run ' if sel_role == 'node' else '' }}"

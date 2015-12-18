@@ -7,7 +7,8 @@
 
 - name: install java
   apt:
-    name: "{{ java_pkg }}"
+    pkg: "{{ java_pkg }}"
+    state: present
     update_cache: yes
     install_recommends: no
 
@@ -19,6 +20,14 @@
 
 - name: download selenium
   get_url: url="{{ sel_url }}" dest="{{ sel_home }}/{{ sel_jar }}"
+
+- name: install xvfb
+  apt: pkg=xvfb state=latest
+  when: sel_role == 'node'
+
+- name: install firefox
+  apt: pkg=firefox state=latest install_recommends=no
+  when: sel_role == 'node' and browser == 'firefox'
 
 - name: copy selenium & service config files
   template: src="{{ item.src }}" dest="{{ item.dest }}"

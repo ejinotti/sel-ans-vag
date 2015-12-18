@@ -12,4 +12,4 @@ stop on runlevel [!2345]
 
 ### Start Selenium Server
 
-  exec sudo -u {{ sel_user }} java -jar {{ sel_home }}/{{ sel_jar }} {{ sel_opts }}
+  exec sudo -u {{ sel_user }} {{ xvfb_cmd }}java {{ java_args }}

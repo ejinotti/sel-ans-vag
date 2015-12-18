@@ -1,3 +1,19 @@
 {
-  "helloes": 123
+  "capabilities": [
+    {
+      "browserName": "{{ browser }}",
+      "maxInstances": {{ browser_instances }},
+      "seleniumProtocol": "WebDriver"
+    }
+  ],
+  "configuration":
+  {
+    "proxy": "org.openqa.grid.selenium.proxy.DefaultRemoteProxy",
+    "maxSession": {{ browser_instances }},
+    "port": 5555,
+    "register": true,
+    "registerCycle": 5000,
+    "hubPort": {{ selenium_hub_port }},
+    "hubHost": {{ selenium_hub_host }}
+  }
 }
