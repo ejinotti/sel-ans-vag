@@ -23,10 +23,10 @@ Vagrant.configure(2) do |config|
     end
   end
 
-  # config.vm.define :chrome do |chrome|
-  #   chrome.vm.provision :ansible do |ansible|
-  #     ansible.verbose = "v"
-  #     ansible.playbook = "chrome.yml"
-  #   end
-  # end
+  config.vm.define :chrome do |chrome|
+    chrome.vm.provision :ansible do |ansible|
+      ansible.verbose = "v"
+      ansible.playbook = "playbooks/selenium-node-chrome.yml"
+    end
+  end
 end

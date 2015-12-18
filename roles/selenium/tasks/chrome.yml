@@ -1,0 +1,40 @@
+---
+- include: base.yml
+
+- name: add chrome repo key
+  apt_key:
+    url: "https://dl-ssl.google.com/linux/linux_signing_key.pub"
+    state: present
+  when: sel_role == 'node' and browser == 'chrome'
+
+- name: add chrome apt repo
+  apt_repository:
+    repo: "deb http://dl.google.com/linux/chrome/deb/ stable main"
+    state: present
+
+- name: install chrome & unzip
+  apt: pkg="{{ item }}" state=latest update_cache=yes
+  with_items: [google-chrome-stable, unzip]
+
+- name: get chromedriver zip
+  get_url:
+    url: "http://chromedriver.storage.googleapis.com/{{ chrome_driver_ver }}/chromedriver_linux64.zip"
+    dest: "{{ sel_home }}/chromedriver.zip"
+
+- name: unzip chromedriver zip
+  unarchive:
+    copy: no
+    src: "{{ sel_home }}/chromedriver.zip"
+    dest: "{{ sel_home }}"
+
+- name: clean up chromedriver zip
+  file: path="{{ sel_home }}/chromedriver.zip" state=absent
+
+- name: make chromedriver binary executable
+  file: path="{{ sel_home }}/chromedriver" mode=a+x
+
+- name: symlink chromedriver to /usr/bin
+  file:
+    src: "{{ sel_home }}/chromedriver"
+    dest: /usr/bin/chromedriver
+    state: link

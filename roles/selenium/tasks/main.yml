@@ -21,13 +21,11 @@
 - name: download selenium
   get_url: url="{{ sel_url }}" dest="{{ sel_home }}/{{ sel_jar }}"
 
-- name: install xvfb
-  apt: pkg=xvfb state=latest
-  when: sel_role == 'node'
-
-- name: install firefox
-  apt: pkg=firefox state=latest install_recommends=no
+- include: firefox.yml
   when: sel_role == 'node' and browser == 'firefox'
+
+- include: chrome.yml
+  when: sel_role == 'node' and browser == 'chrome'
 
 - name: copy selenium & service config files
   template: src="{{ item.src }}" dest="{{ item.dest }}"

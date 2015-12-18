@@ -1,0 +1,5 @@
+---
+- include: base.yml
+
+- name: install firefox
+  apt: pkg=firefox state=latest install_recommends=no
