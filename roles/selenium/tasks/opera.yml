@@ -1,0 +1,39 @@
+---
+- include: base.yml
+
+- name: add opera repo key
+  apt_key:
+    url: "http://deb.opera.com/archive.key"
+    state: present
+
+- name: add opera apt repo
+  apt_repository:
+    repo: "deb http://deb.opera.com/opera stable non-free"
+    state: present
+
+- name: install opera & unzip
+  apt: pkg="{{ item }}" state=latest update_cache=yes
+  with_items: [opera, unzip]
+
+- name: get operadriver zip
+  get_url:
+    url: "https://github.com/operasoftware/operachromiumdriver/releases/download/v{{ opera_driver_ver }}/operadriver_linux64.zip"
+    dest: "{{ sel_home }}/operadriver.zip"
+
+- name: unzip operadriver zip
+  unarchive:
+    copy: no
+    src: "{{ sel_home }}/operadriver.zip"
+    dest: "{{ sel_home }}"
+
+- name: clean up operadriver zip
+  file: path="{{ sel_home }}/operadriver.zip" state=absent
+
+- name: make operadriver binary executable
+  file: path="{{ sel_home }}/operadriver" mode=a+x
+
+- name: symlink operadriver to /usr/bin
+  file:
+    src: "{{ sel_home }}/operadriver"
+    dest: /usr/bin/operadriver
+    state: link

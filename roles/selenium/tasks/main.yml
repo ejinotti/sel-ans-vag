@@ -27,6 +27,9 @@
 - include: chrome.yml
   when: sel_role == 'node' and browser == 'chrome'
 
+- include: opera.yml
+  when: sel_role == 'node' and browser == 'opera'
+
 - name: copy selenium & service config files
   template: src="{{ item.src }}" dest="{{ item.dest }}"
   with_items:

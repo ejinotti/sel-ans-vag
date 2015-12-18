@@ -31,4 +31,13 @@ Vagrant.configure(2) do |config|
       ansible.playbook = "playbooks/selenium-node-chrome.yml"
     end
   end
+
+  config.vm.define :opera do |opera|
+    opera.vm.network "private_network", ip: "192.168.12.16"
+
+    opera.vm.provision :ansible do |ansible|
+      ansible.verbose = "v"
+      ansible.playbook = "playbooks/selenium-node-opera.yml"
+    end
+  end
 end
