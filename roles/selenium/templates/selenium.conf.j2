@@ -1,6 +1,6 @@
 # Selenium Server
 
-description 'Selenium hub service'
+description 'Selenium {{ sel_role.upper() }} Service'
 
 start on filesystem or runlevel [2345]
 stop on runlevel [!2345]
@@ -12,4 +12,4 @@ stop on runlevel [!2345]
 
 ### Start Selenium Server
 
-  exec sudo -u seluser java -jar /opt/selenium/selenium.jar -role hub -hubConfig /opt/selenium/config.json >> /opt/selenium.log 2>&1
+  exec sudo -u {{ sel_user }} java -jar {{ sel_home }}/{{ sel_jar }} {{ sel_opts }}

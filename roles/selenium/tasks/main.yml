@@ -1,0 +1,32 @@
+---
+- name: add apt repos
+  apt_repository: repo="{{ item }}" state=present
+  with_items:
+    - "deb http://archive.ubuntu.com/ubuntu {{ ubuntu_name }} main universe"
+    - "deb http://archive.ubuntu.com/ubuntu {{ ubuntu_name }}-updates main universe"
+
+- name: install java
+  apt:
+    name: "{{ java_pkg }}"
+    update_cache: yes
+    install_recommends: no
+
+- name: create selenium user
+  user: name="{{ sel_user }}" groups=sudo
+
+- name: make selenium directory
+  file: path="{{ sel_home }}" state=directory owner="{{ sel_user }}"
+
+- name: download selenium
+  get_url: url="{{ sel_url }}" dest="{{ sel_home }}/{{ sel_jar }}"
+
+- name: copy selenium & service config files
+  template: src="{{ item.src }}" dest="{{ item.dest }}"
+  with_items:
+    - src: selenium.conf.j2
+      dest: "/etc/init/selenium-{{ sel_role }}.conf"
+    - src: "{{ sel_role }}_config.json.j2"
+      dest: "{{ sel_home }}/config.json"
+
+- name: start selenium
+  service: name="selenium-{{ sel_role }}" state=restarted

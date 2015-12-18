@@ -1,0 +1,7 @@
+---
+- hosts: hub
+  sudo: yes
+  vars:
+    sel_role: hub
+    selenium_hub_port: 4444
+  roles: [selenium]

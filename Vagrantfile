@@ -10,7 +10,7 @@ Vagrant.configure(2) do |config|
 
     hub.vm.provision :ansible do |ansible|
       ansible.verbose = "v"
-      ansible.playbook = "hub.yml"
+      ansible.playbook = "playbooks/selenium-hub.yml"
     end
   end
 
