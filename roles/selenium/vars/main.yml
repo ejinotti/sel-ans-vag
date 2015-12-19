@@ -4,7 +4,7 @@
 sel_version: 2.48.2
 ubuntu_name: trusty
 java_pkg: openjdk-7-jre-headless
-chrome_driver_ver: 2.20
+chrome_driver_ver: 2.9
 opera_driver_ver: 0.2.2
 
 # for calculating sel_url
